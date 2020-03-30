@@ -1,8 +1,14 @@
 from rest_framework import serializers
 
-from .models import Overlay
+from .models import Template, User
 
-class OverlaySerializer(serializers.HyperlinkedModelSerializer):
+class TemplateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Overlay
+        model = Template
+        fields = "__all__"
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
         fields = "__all__"
