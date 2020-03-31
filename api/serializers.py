@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Template, User
+from .models import Template, User, Effect
 
 class TemplateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -16,5 +16,5 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class EffectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
+        model = Effect
         fields = "__all__"
