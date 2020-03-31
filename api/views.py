@@ -17,4 +17,4 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class EffectViewSet(viewsets.ModelViewSet):
     queryset = Effect.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = EffectSerializer
