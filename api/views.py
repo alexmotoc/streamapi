@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from .serializers import TemplateSerializer, UserSerializer
-from .models import Template, User
+from .serializers import TemplateSerializer, UserSerializer, EffectSerializer
+from .models import Template, User, Effect
 
 
 class TemplateViewSet(viewsets.ModelViewSet):
@@ -12,4 +12,9 @@ class TemplateViewSet(viewsets.ModelViewSet):
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class EffectViewSet(viewsets.ModelViewSet):
+    queryset = Effect.objects.all()
     serializer_class = UserSerializer

@@ -16,3 +16,11 @@ class User(models.Model):
 
     def __str__(self):
         return self.tokens
+
+
+class Effect(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    effects = models.TextField()
+
+    def __str__(self):
+        return self.effects
