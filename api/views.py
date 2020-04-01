@@ -1,8 +1,15 @@
+import json
+import subprocess
+
 from django.shortcuts import render
 from rest_framework import viewsets
 
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from .serializers import TemplateSerializer, UserSerializer, EffectSerializer
-from .models import Template, User, Effect
+from .models import Template, User, Effect, Stream
 
 
 class TemplateViewSet(viewsets.ModelViewSet):
@@ -18,3 +25,20 @@ class UserViewSet(viewsets.ModelViewSet):
 class EffectViewSet(viewsets.ModelViewSet):
     queryset = Effect.objects.all()
     serializer_class = EffectSerializer
+
+
+@api_view(['POST'])
+def start_stream(request):
+    if request.method == 'POST':
+        stream_key = request.POST.get('name')
+
+        tokens = json.loads(str(User.objects.all()[0]))
+        twitch_stream_key = tokens.get('twitch').get('streamKey')
+
+        pid1 = subprocess.Popen(['~/RngStreaming/build/cmd/simple-backend', stream_key])
+        pid2 = subprocess.Popen(['~/RngStreaming/outputs/twitch', stream_key, twitch_stream_key])
+
+        new_stream = Stream.objects.create(stream_key=stream_key, process_ids='{}, {}'.format(str(pid1), str(pid2)))
+        new_stream.save()
+
+        return Response(status=status.HTTP_200_OK)
