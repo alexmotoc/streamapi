@@ -1,4 +1,6 @@
 import json
+import os
+import signal
 import subprocess
 
 from django.shortcuts import render
@@ -40,5 +42,20 @@ def start_stream(request):
 
         new_stream = Stream.objects.create(stream_key=stream_key, process_ids='{}, {}'.format(str(pid1), str(pid2)))
         new_stream.save()
+
+        return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def stop_stream(request):
+    if request.method == 'POST':
+        stream_key = request.POST.get('name')
+
+        stream = Stream.objects.filter(stream_key=stream_key)[0]
+
+        for pid in stream.process_ids.split(', '):            
+            os.kill(int(pid), signal.SIGTERM)
+
+        stream.delete()
 
         return Response(status=status.HTTP_200_OK)
