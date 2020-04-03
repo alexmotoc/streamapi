@@ -25,7 +25,7 @@ SECRET_KEY = '^rk!6i^1h7ehdj)fkl2%qs!zzxuzg^!!77o!3^d!tv%)_^*bmj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tungsten.alexlogan.co.uk', '127.0.0.1']
 
 
 # Application definition
